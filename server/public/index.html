@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>To-Do List</title>
+    <script type="text/javascript" src="vendors/jquery.js"></script>
+    <script type="text/javascript" src="scripts/client.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+  </head>
+  <body>
+    <header>
+      <h1>to do list</h1>
+    </header>
+    <div id="wrapper">
+        <h3>add item</h3>
+          <form>
+            <input type="text" placeholder="description" id="new_item">
+            <input type="submit" value="Submit">
+          </form>
+        <h3>items to do</h3>
+          <table>
+            <thead id="items_to_do"></thead>
+          </table>
+        <!-- output table here -->
+        <h3>finished items</h3>
+          <table>
+            <thead id="finished_items"></thead>
+          </table>
+        <!-- finished item table here -->
+    </div>
+
+  </body>
+</html>

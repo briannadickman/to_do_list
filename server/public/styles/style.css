@@ -1,0 +1,16 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+wrapper {
+  margin: 0 auto;
+}
+
+header {
+  width: 100%;
+  background-color: pink;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
