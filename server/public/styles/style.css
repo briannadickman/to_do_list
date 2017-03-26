@@ -17,6 +17,31 @@ header {
   text-align: center;
 }
 
+.output {
+  margin: 20px;
+}
+
+.output-title {
+  background-color: lightgrey;
+}
+
+.false {
+  background-color: lightgreen;
+  text-align: left;
+  width: 100%;
+  padding: 5px;
+}
+
+/*#delete {
+  border: 1px lightgrey solid;
+  padding: 5px;
+  text-align: center;
+}*/
+
+#cbox {
+  border: 1px lightgrey solid;
+}
+
 table {
   /*margin: 0 auto;
   width: 100%;*/

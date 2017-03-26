@@ -56,4 +56,27 @@ router.post('/add', function( req, res ){
   });
 });
 
+router.delete('/delete/:listItem', function( req, res ) {
+  console.log('in delete item');
+  var listItem = req.params.listItem;
+
+  pool.connect(function(error, db, done){
+  if(error) {
+    console.log('Error connecting to the database.');
+    res.send(500);
+  } else {
+    db.query('DELETE FROM "to_do" WHERE "id" = $1',
+             [listItem], function(queryError, result){
+      done();
+      if(queryError) {
+        console.log('Error making query.');
+        res.send(500);
+      } else {
+        res.sendStatus(201);
+      }
+    });
+    }
+  });
+});
+
 module.exports = router;
