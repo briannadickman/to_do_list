@@ -1,3 +1,4 @@
+var listClass;
 var listId;
 
 $(document).ready(function(){
@@ -33,34 +34,32 @@ function checkboxClick() {
   $(document).on("click", "input[type='checkbox']", function(){
     if($(this).prop("checked") ===  true) {
       console.log("cbox checked");
-      listId = $(this).parent().parent();
-      listId.removeClass('false');
-      listId.addClass('true');
-      // updateItem();
-      // console.log($(this).);
+      listClass = $(this).parent().parent();
+      listId = $(this).data("id");
+      updateItem(listId);
+      listClass.remove();
     } else if ($(this).prop("checked") ===  false) {
       console.log("cbox unchecked");
-      listId = $(this).parent().parent();
-      listId.removeClass('true');
-      listId.addClass('false');
-      // updateItem();
+      listClass = $(this).parent().parent();
+      listId = $(this).data("id");
+      updateItem(listId);
+      listClass.remove();
     }
   });
 }
 
 //  UPDATE ITEM
-function updateItem(){
-
+function updateItem(listId){
+console.log(listId, listClass.attr('class'));
   $.ajax({
     type: "PUT",
     url: "/todo/change",
-    data: {id: listId},
-    success: function(){
+    data: {id: listId, complete: listClass.attr("class")},
+    success: function(response){
       console.log(response);
-
     }
   });
-  getList();
+  // getList();
 }
 
 //  REMOVE ITEM
@@ -83,12 +82,13 @@ function removeItem(){
 // GET ITEMS
 function getList(){
   console.log("getList running");
+
   $.ajax({
     type: "GET",
     url: "/todo",
     success: function(response){
       console.log(response);
-      $("#items_to_do").empty();
+      // $("#items_to_do").empty();
       for (var i = 0; i < response.length; i++) {
         var todo = response[i];
         if(todo.complete === false) {
