@@ -22,6 +22,7 @@ function addItem(){
         data: {task: $("#new_item").val()},
         success: function(response){
           // console.log(response);
+          clearItems();
           getList();
         }
       });
@@ -50,7 +51,6 @@ function checkboxClick() {
 
 //  UPDATE ITEM
 function updateItem(listId){
-console.log(listId, listClass.attr('class'));
   $.ajax({
     type: "PUT",
     url: "/todo/change",
@@ -59,7 +59,8 @@ console.log(listId, listClass.attr('class'));
       console.log(response);
     }
   });
-  // getList();
+  clearItems();
+  getList();
 }
 
 //  REMOVE ITEM
@@ -73,6 +74,7 @@ function removeItem(){
       type: "DELETE",
       url: "todo/delete/" + listItem,
       success: function(){
+        clearItems();
         getList();
       }
     });
@@ -107,4 +109,10 @@ function getList(){
         }
     }
   });
+}
+
+// CLEAR ITEMS
+function clearItems(){
+  $("#items_to_do").empty();
+  $("#finished_items").empty();
 }
