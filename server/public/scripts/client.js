@@ -1,7 +1,15 @@
+var listId;
+
 $(document).ready(function(){
   console.log("jQuery sourced!");
-  // addItem();
+  addItem();
+  getList();
+  checkboxClick();
+  removeItem();
+  });
 
+// ADD ITEM
+function addItem(){
   $('#todo_form').on("submit", function(){
     event.preventDefault();
     console.log($("#new_item").val());
@@ -18,25 +26,44 @@ $(document).ready(function(){
       });
         $("#new_item").val('');
     });
-      getList();
-
-$(document).on("click", "input[type='checkbox']", function(){
-  if($(this).prop("checked") ===  true) {
-    console.log("cbox checked");
-  } else if ($(this).prop("checked") ===  false) {
-    console.log("cbox unchecked");
-  }
-});
-
-removeItem();
-    // }
-}); //end document.ready
-
-
-function moveItem(){
-
 }
 
+//  CHECKBOX
+function checkboxClick() {
+  $(document).on("click", "input[type='checkbox']", function(){
+    if($(this).prop("checked") ===  true) {
+      console.log("cbox checked");
+      listId = $(this).parent().parent();
+      listId.removeClass('false');
+      listId.addClass('true');
+      // updateItem();
+      // console.log($(this).);
+    } else if ($(this).prop("checked") ===  false) {
+      console.log("cbox unchecked");
+      listId = $(this).parent().parent();
+      listId.removeClass('true');
+      listId.addClass('false');
+      // updateItem();
+    }
+  });
+}
+
+//  UPDATE ITEM
+function updateItem(){
+
+  $.ajax({
+    type: "PUT",
+    url: "/todo/change",
+    data: {id: listId},
+    success: function(){
+      console.log(response);
+
+    }
+  });
+  getList();
+}
+
+//  REMOVE ITEM
 function removeItem(){
   $(document).on("click", ".delete", function(){
       console.log("delete clicked");
@@ -53,6 +80,7 @@ function removeItem(){
   });
 }
 
+// GET ITEMS
 function getList(){
   console.log("getList running");
   $.ajax({
@@ -63,11 +91,19 @@ function getList(){
       $("#items_to_do").empty();
       for (var i = 0; i < response.length; i++) {
         var todo = response[i];
-        $("#items_to_do").append("<tr></tr>");
-        var $el = $("#items_to_do").children().last();
-        $el.append('<td><input type="checkbox" id="cbox" value="checkbox"></td>');
-        $el.append('<td class="false" id="listItem">' + todo.task + '</td>');
-        $el.append('<td><button class="delete" data-id="' + todo.id + '">X</button></td>');
+        if(todo.complete === false) {
+              $("#items_to_do").append("<tr class=" + todo.complete + "></tr>");
+              var $el = $("#items_to_do").children().last();
+              $el.append('<td><input type="checkbox" data-id="' + todo.id + '" value="checkbox"></td>');
+              $el.append('<td class="listItem">' + todo.task + '</td>');
+              $el.append('<td><button class="delete" data-id="' + todo.id + '">X</button></td>');
+        } else if (todo.complete === true) {
+              $("#finished_items").append("<tr class=" + todo.complete + "></tr>");
+              var $el1 = $("#finished_items").children().last();
+              $el1.append('<td><input type="checkbox" data-id="' + todo.id + '" value="checkbox"></td>');
+              $el1.append('<td class="listItem">' + todo.task + '</td>');
+              $el1.append('<td><button class="delete" data-id="' + todo.id + '">X</button></td>');
+      }
         }
     }
   });

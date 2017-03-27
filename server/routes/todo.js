@@ -79,4 +79,10 @@ router.delete('/delete/:listItem', function( req, res ) {
   });
 });
 
+router.put('/change', function( req, res ){
+  console.log(req.body);
+
+  // var listId=req.body.id;
+});
+
 module.exports = router;
