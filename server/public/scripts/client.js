@@ -57,10 +57,11 @@ function updateItem(listId){
     data: {id: listId, complete: listClass.attr("class")},
     success: function(response){
       console.log(response);
+      clearItems();
+      getList();
     }
   });
-  clearItems();
-  getList();
+
 }
 
 //  REMOVE ITEM
@@ -102,7 +103,7 @@ function getList(){
         } else if (todo.complete === true) {
               $("#finished_items").append("<tr class=" + todo.complete + "></tr>");
               var $el1 = $("#finished_items").children().last();
-              $el1.append('<td><input type="checkbox" data-id="' + todo.id + '" value="checkbox"></td>');
+              $el1.append('<td><input type="checkbox" data-id="' + todo.id + '" value="checkbox" checked></td>');
               $el1.append('<td class="listItem">' + todo.task + '</td>');
               $el1.append('<td><button class="delete" data-id="' + todo.id + '">X</button></td>');
       }

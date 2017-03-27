@@ -19,8 +19,14 @@ header {
   margin-bottom: 30px;
 }
 
+#new_item {
+  width: 250px;
+}
+
 h3 {
   font-size: 18px;
+  letter-spacing: 1px;
+  padding: 5px;
 }
 
 #wrapper {
